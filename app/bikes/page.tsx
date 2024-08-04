@@ -7,25 +7,25 @@ const bikesData = [
   {
     id: 1,
     image: '/bike1.jpeg',
-    location: 'New York, NY',
+    location: 'Eldoret, KE',
     costPerHour: '$15/hour',
   },
   {
     id: 2,
     image: '/bike2.jpeg',
-    location: 'Los Angeles, CA',
+    location: 'Nairobi, KE',
     costPerHour: '$12/hour',
   },
   {
     id: 3,
     image: '/bike3.jpeg',
-    location: 'San Francisco, CA',
+    location: 'Mombasa, KE',
     costPerHour: '$18/hour',
   },
   {
     id: 4,
     image: '/bike3.jpeg',
-    location: 'Chicago, IL',
+    location: 'Kisumu, KE',
     costPerHour: '$14/hour',
   },
 ];
