@@ -7,11 +7,11 @@ const LoginPage = () => {
   const router = useRouter();
 
   const handleRoleSelection = (role: string) => {
-    router.push(`/login/${role}`); // Redirect to the role-specific login page
+    router.push(`/login/${role}`);
   };
 
   const handleSignUpRedirect = (role: string) => {
-    router.push(`/signup/${role}`); // Redirect to the role-specific signup page
+    router.push(`/signup/${role}`);
   };
 
   return (
@@ -37,7 +37,7 @@ const LoginPage = () => {
           </div>
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <a
                 href="#"
                 onClick={() => handleSignUpRedirect('provider')}
