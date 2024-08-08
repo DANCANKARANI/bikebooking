@@ -1,18 +1,52 @@
 "use client";
 import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import Footer from '../../components/Footer';
 import Navbar from '../../components/Navbar';
 
 const CustomerSignupPage = () => {
   const router = useRouter();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic here
-    // For example, send the form data to your API
+    setError('');
+    setSuccess('');
 
-    // Redirect to login or homepage upon successful signup
-    router.push('/login/customer');
+    // Validate passwords match
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    try {
+      const response = await fetch('https://bikebooking-api.onrender.com/api/v1/user/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSuccess('Sign up successful! Redirecting to login...');
+        setTimeout(() => {
+          router.push('/login/customer');
+        }, 2000); // Redirect after 2 seconds to allow the success message to be visible
+      } else {
+        throw new Error(result.message || 'Sign up failed. Please try again.');
+      }
+    } catch (error: any) {
+      console.error('Error during signup:', error);
+      setError(error.message || 'An unknown error occurred.');
+    }
   };
 
   return (
@@ -21,6 +55,8 @@ const CustomerSignupPage = () => {
       <main className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
           <h1 className="text-3xl font-bold mb-6 text-center">Customer Sign Up</h1>
+          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+          {success && <p className="text-green-500 text-center mb-4">{success}</p>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-700">Name</label>
@@ -30,6 +66,8 @@ const CustomerSignupPage = () => {
                 name="name"
                 placeholder="John Doe"
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
               />
             </div>
@@ -41,6 +79,8 @@ const CustomerSignupPage = () => {
                 name="email"
                 placeholder="you@example.com"
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -52,6 +92,8 @@ const CustomerSignupPage = () => {
                 name="password"
                 placeholder="********"
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
@@ -63,6 +105,8 @@ const CustomerSignupPage = () => {
                 name="confirm-password"
                 placeholder="********"
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
             </div>
