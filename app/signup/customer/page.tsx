@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar';
 
 const CustomerSignupPage = () => {
   const router = useRouter();
-  const [name, setName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -25,18 +25,25 @@ const CustomerSignupPage = () => {
     }
 
     try {
+
       const response = await fetch('https://bikebooking-api.onrender.com/api/v1/user/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, password }),
+        
+        body: JSON.stringify({ 
+          full_name: fullName,
+          email,
+          password,
+          confirm_password: confirmPassword 
+        }),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-        setSuccess('Sign up successful! Redirecting to login...');
+        setError(result.error);
         setTimeout(() => {
           router.push('/login/customer');
         }, 2000); // Redirect after 2 seconds to allow the success message to be visible
@@ -59,15 +66,15 @@ const CustomerSignupPage = () => {
           {success && <p className="text-green-500 text-center mb-4">{success}</p>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="name" className="block text-gray-700">Name</label>
+              <label htmlFor="fullName" className="block text-gray-700">Full Name</label>
               <input
                 type="text"
-                id="name"
-                name="name"
+                id="fullName"
+                name="fullName"
                 placeholder="John Doe"
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
                 required
               />
             </div>
@@ -98,11 +105,11 @@ const CustomerSignupPage = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="confirm-password" className="block text-gray-700">Confirm Password</label>
+              <label htmlFor="confirmPassword" className="block text-gray-700">Confirm Password</label>
               <input
                 type="password"
-                id="confirm-password"
-                name="confirm-password"
+                id="confirmPassword"
+                name="confirmPassword"
                 placeholder="********"
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 value={confirmPassword}

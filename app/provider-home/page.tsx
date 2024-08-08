@@ -4,7 +4,7 @@ import Footer from '@/app/components/Footer';
 import Navbar from '@/app/components/Navbar';
 
 const ProviderPage = () => {
-  const [costPerHour, setCostPerHour] = useState('');
+  const [cost, setCost] = useState('');
   const [location, setLocation] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [error, setError] = useState('');
@@ -22,24 +22,36 @@ const ProviderPage = () => {
     setSuccess('');
 
     const formData = new FormData();
-    formData.append('costPerHour', costPerHour);
+    formData.append('cost', cost);
     formData.append('location', location);
     if (image) {
       formData.append('image', image);
     }
 
     try {
-      const response = await fetch('https://bikebooking-api.onrender.com/api/v1/bike/post', {
+      const token = localStorage.getItem('authToken');
+      const response = await fetch('https://bikebooking-api.onrender.com/api/v1/bikes', {
         method: 'POST',
         body: formData,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        
       });
+
+      // Check if the response is JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        throw new Error(`Unexpected response: ${text}`);
+      }
 
       const result = await response.json();
 
       if (response.ok) {
         setSuccess('Bike details posted successfully!');
         // Clear form fields
-        setCostPerHour('');
+        setCost('');
         setLocation('');
         setImage(null);
       } else {
@@ -61,15 +73,15 @@ const ProviderPage = () => {
           {success && <p className="text-green-500 text-center mb-4">{success}</p>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="costPerHour" className="block text-gray-700">Cost Per Hour</label>
+              <label htmlFor="cost" className="block text-gray-700">Cost</label>
               <input
                 type="number"
-                id="costPerHour"
-                name="costPerHour"
-                placeholder="Enter cost per hour"
+                id="cost"
+                name="cost"
+                placeholder="Enter cost"
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-                value={costPerHour}
-                onChange={(e) => setCostPerHour(e.target.value)}
+                value={cost}
+                onChange={(e) => setCost(e.target.value)}
                 required
               />
             </div>

@@ -6,11 +6,13 @@ import React, { useState } from 'react';
 const ProviderLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [token,setToken] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(''); // Clear any previous errors
+    console.log(token)
 
     try {
       const response = await fetch('https://bikebooking-api.onrender.com/api/v1/provider/login', {
@@ -27,11 +29,15 @@ const ProviderLoginPage = () => {
         if (result.success === 'true') {
           console.log('Login successful:', result);
           // Save token to local storage (or handle it as needed)
-          localStorage.setItem('authToken', result.data.token);
+          setToken(result.data.token)
+          
           // Redirect to home page or provider dashboard
           window.location.href = '/provider-home'; // Adjust as needed
+          localStorage.setItem('authToken', result.data.token);
+          console.log(token)
+         
         } else {
-          throw new Error(result.message || 'Login failed. Please check your email and password.');
+          throw new Error(result.error || 'Login failed. Please check your email and password.');
         }
       } else {
         // Handle non-200 response
