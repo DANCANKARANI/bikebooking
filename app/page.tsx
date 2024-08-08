@@ -1,13 +1,14 @@
+"use client";
 
-"use client"
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 interface Bike {
-  id: number; // Adjust according to your data model
+  id: string;
   name: string;
   location: string;
-  cost_per_hour: number;
+  price: number;
   image_url: string;
 }
 
@@ -15,59 +16,62 @@ const Home = () => {
   const [location, setLocation] = useState<string>('');
   const [bikes, setBikes] = useState<Bike[]>([]);
   const [error, setError] = useState<string>('');
+  const [success, setSuccess] = useState<string>('');
 
   const handleSearch = async () => {
     setError('');
+    setSuccess('');
     setBikes([]);
 
     try {
       const token = localStorage.getItem('authToken');
-     
-      const response = await fetch(`https://bikebooking-api.onrender.com/api/v1/bikes/?location=${encodeURIComponent(location)}`,{
+      const response = await fetch(`https://bikebooking-api.onrender.com/api/v1/bikes/?location=${encodeURIComponent(location)}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
-      })
-       
+      });
+
+      const result = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to fetch bikes'+location);
+        console.log(result.error);
+        throw new Error(result.error || 'Failed to fetch bikes');
       }
-      
-      const result: Bike[] = await response.json();
-      console.log(result)
-      
-      if (result.length === 0) {
-        setError('No bikes found for this location');
+
+      if (result.success !== "true" || result.data.length === 0) {
+        console.log(result.error);
+        setError(result.error || 'No bikes found for this location');
       } else {
-        setBikes(result);
+        setSuccess(result.message);
+        setBikes(result.data);
+        console.log(result.data);
       }
-    } catch (err) {
-      setError("error:"+err);
+    } catch (err: any) {
+      setError(err.message || 'An unknown error occurred.');
     }
   };
 
   return (
     <div className="font-sans antialiased">
-        <Navbar/>
+      <Navbar />
       <header className="bg-blue-500 text-white p-4">
         <h1 className="text-3xl">Bike Finder</h1>
       </header>
-    
 
-      <main className="p-4">
+      <main className="container mx-auto px-4 py-8">
         <section className="hero bg-cover bg-center text-white py-20" style={{ backgroundImage: "url('/hero-background.jpg')" }}>
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Adventure Awaits</h1>
             <p className="text-lg mb-6">Find the perfect bike for your next ride</p>
-            <input 
-              type="text" 
-              placeholder="Search for bikes by location" 
-              className="px-4 py-2 rounded w-full max-w-md mb-4 text-gray-800" 
+            <input
+              type="text"
+              placeholder="Search for bikes by location"
+              className="px-4 py-2 rounded w-full max-w-md mb-4 text-gray-800"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
-            <button 
-              onClick={handleSearch} 
+            <button
+              onClick={handleSearch}
               className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
             >
               Find a Bike Near You
@@ -76,24 +80,31 @@ const Home = () => {
         </section>
 
         {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+        {success && !error && <p className="text-green-500 text-center mt-4">{success}</p>}
 
         {bikes.length > 0 && (
-          <ul className="list-none mt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8">
             {bikes.map((bike) => (
-              <li key={bike.id} className="border-b border-gray-300 py-4">
-                <h2 className="text-xl font-bold">{bike.name}</h2>
-                <p>{bike.location}</p>
-                <p>${bike.cost_per_hour} per hour</p>
-                <img src={bike.image_url} alt={bike.name} className="w-full max-w-xs mt-2" />
-              </li>
+              <div key={bike.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <img
+                  src={bike.image_url}
+                  alt={`Bike in ${bike.location}`}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-xl font-bold">{bike.location}</h3>
+                  <p className="text-gray-600">${bike.price} per hour</p>
+                  <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                    Book Now
+                  </button>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </main>
 
-      <footer className="bg-gray-800 text-white p-4 text-center">
-        <p>&copy; 2024 Bike Finder. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 };
