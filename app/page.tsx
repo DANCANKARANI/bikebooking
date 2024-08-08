@@ -51,6 +51,37 @@ const Home = () => {
     }
   };
 
+  const handleBookNow = async (bikeId: string) => {
+    try {
+      setError('');
+      setSuccess('');
+      
+      const token = localStorage.getItem('authToken');
+      const response = await fetch(`https://bikebooking-api.onrender.com/api/v1/bikes/bookings/${bikeId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ book_id: bikeId }), // Sending book_id in the body
+      });
+
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result.message || 'Failed to book the bike');
+      }
+
+      const result = await response.json();
+      if (result.success === "true") {
+        setSuccess(`Successfully booked bike with ID: ${bikeId}`);
+      } else {
+        throw new Error(result.message || 'Booking failed');
+      }
+    } catch (err: any) {
+      setError(err.message || 'An error occurred while booking the bike');
+    }
+  };
+
   return (
     <div className="font-sans antialiased">
       <Navbar />
@@ -94,7 +125,10 @@ const Home = () => {
                 <div className="p-4">
                   <h3 className="text-xl font-bold">{bike.location}</h3>
                   <p className="text-gray-600">${bike.price} per hour</p>
-                  <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                  <button
+                    onClick={() => handleBookNow(bike.id)}
+                    className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+                  >
                     Book Now
                   </button>
                 </div>
