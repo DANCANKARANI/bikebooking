@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import Image from 'next/image';
+
 
 
 interface Bike {
@@ -27,7 +27,7 @@ const Home = () => {
 
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`https://bikebooking-api.onrender.com/api/v1/bikes/?location=${encodeURIComponent(location)}`, {
+      const response = await fetch(`https://tysonbikes.onrender.com/api/v1/bikes/?location=${encodeURIComponent(location)}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -37,7 +37,7 @@ const Home = () => {
 
       if (!response.ok) {
         console.log(result.error);
-        throw new Error(result.error || 'Failed to fetch bikes');
+        throw new Error(result || 'Failed to fetch bikes');
       }
 
       if (result.success !== "true" || result.data.length === 0) {
@@ -119,14 +119,14 @@ const Home = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8">
             {bikes.map((bike) => (
               <div key={bike.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                <Image
+                <img
                   src={bike.image_url}
                   alt={`Bike in ${bike.location}`}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-4">
                   <h3 className="text-xl font-bold">{bike.location}</h3>
-                  <p className="text-gray-600">${bike.price} per hour</p>
+                  <p className="text-gray-600">ksh{bike.price} per hour</p>
                   <button
                     onClick={() => handleBookNow(bike.id)}
                     className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"

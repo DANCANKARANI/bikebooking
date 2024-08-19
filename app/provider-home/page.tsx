@@ -79,7 +79,7 @@ const ProviderPage = () => {
                 id="cost"
                 name="cost"
                 placeholder="Enter cost"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-gray-700"
                 value={cost}
                 onChange={(e) => setCost(e.target.value)}
                 required
@@ -92,7 +92,7 @@ const ProviderPage = () => {
                 id="location"
                 name="location"
                 placeholder="Enter location"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-gray-700"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 required

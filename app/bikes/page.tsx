@@ -77,7 +77,7 @@ const BikesPage = () => {
   return (
     <div className="font-sans antialiased">
       <Navbar />
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 bg-black">
         <h1 className="text-3xl font-bold mb-6 text-center">Available Bikes</h1>
         {error && <p className="text-red-500 text-center mb-6">{error}</p>}
         {successMessage && <p className="text-green-500 text-center mb-6">{successMessage}</p>}
@@ -91,7 +91,7 @@ const BikesPage = () => {
               />
               <div className="p-4">
                 <h3 className="text-xl font-bold">{bike.location}</h3>
-                <p className="text-gray-600">${bike.price}/hour</p>
+                <p className="text-gray-600">ksh{bike.price}/hour</p>
                 <p className="text-gray-600">Owner: {bike.owner}</p>
                 <button
                   onClick={() => handleBookNow(bike.id)}

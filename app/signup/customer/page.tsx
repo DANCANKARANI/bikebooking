@@ -72,7 +72,7 @@ const CustomerSignupPage = () => {
                 id="fullName"
                 name="fullName"
                 placeholder="John Doe"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-gray-700"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
@@ -85,7 +85,7 @@ const CustomerSignupPage = () => {
                 id="email"
                 name="email"
                 placeholder="you@example.com"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-gray-700"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -98,7 +98,7 @@ const CustomerSignupPage = () => {
                 id="password"
                 name="password"
                 placeholder="********"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-gray-700"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -111,7 +111,7 @@ const CustomerSignupPage = () => {
                 id="confirmPassword"
                 name="confirmPassword"
                 placeholder="********"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-gray-700"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required

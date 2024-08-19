@@ -74,7 +74,7 @@ const ProviderSignupPage = () => {
                 id="business-name"
                 name="business-name"
                 placeholder="Your Business Name"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 text-gray-700"
                 value={businessName}
                 onChange={(e) => setBusinessName(e.target.value)}
                 required
@@ -87,7 +87,7 @@ const ProviderSignupPage = () => {
                 id="contact-person"
                 name="contact-person"
                 placeholder="John Doe"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 text-gray-700"
                 value={contactPerson}
                 onChange={(e) => setContactPerson(e.target.value)}
                 required
@@ -100,7 +100,7 @@ const ProviderSignupPage = () => {
                 id="email"
                 name="email"
                 placeholder="you@example.com"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 text-gray-700"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -113,7 +113,7 @@ const ProviderSignupPage = () => {
                 id="password"
                 name="password"
                 placeholder="********"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 text-gray-700"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -126,7 +126,7 @@ const ProviderSignupPage = () => {
                 id="confirm-password"
                 name="confirm-password"
                 placeholder="********"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 text-gray-700"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -138,7 +138,7 @@ const ProviderSignupPage = () => {
                 id="description"
                 name="description"
                 placeholder="Describe your business"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 text-gray-700"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
