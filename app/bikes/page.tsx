@@ -20,7 +20,7 @@ const BikesPage = () => {
   useEffect(() => {
     const fetchBikes = async () => {
       try {
-        const response = await fetch('https://bikebooking-api.onrender.com/api/v1/bikes/all', {
+        const response = await fetch('https://tysonbikes.onrender.com/api/v1/bikes/all', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
