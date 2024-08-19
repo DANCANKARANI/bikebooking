@@ -3,6 +3,7 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Image from 'next/image';
+import "../globals.css";
 
 
 const AboutUsPage = () => {
@@ -13,7 +14,7 @@ const AboutUsPage = () => {
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-6 text-center">About Us</h1>
           <section className="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h2 className="text-3xl font-semibold mb-4">Our Mission</h2>
+            <h2 className="text-3xl font-semibold mb-4 ">Our Mission</h2>
             <p className="mb-4">
               At Tyson Bike Booking App, our mission is to make biking accessible and enjoyable for everyone. We strive to connect bike enthusiasts with a wide range of bikes for every type of adventure, whether it’s a leisurely ride or a thrilling mountain trail.
             </p>

@@ -1,4 +1,5 @@
 "use client";
+import "../globals.css";
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
@@ -8,9 +9,9 @@ const TermsOfServicePage = () => {
       <Navbar />
       <main className="bg-gray-100 py-16 px-4">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-6 text-center">Terms of Service</h1>
+          <h1 className="text-4xl font-bold mb-6 text-center ext-black">Terms of Service</h1>
           <section className="bg-white p-8 rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-black">Introduction</h2>
             <p className="mb-4">
               Welcome to our bike booking app. By accessing or using our services, you agree to comply with and be bound by the following terms and conditions. If you do not agree with these terms, please do not use our services.
             </p>
@@ -20,7 +21,7 @@ const TermsOfServicePage = () => {
               By using our services, you agree to these Terms of Service and our Privacy Policy. We may update these terms from time to time, and your continued use of our services constitutes acceptance of the updated terms.
             </p>
 
-            <h2 className="text-2xl font-semibold mb-4">User Responsibilities</h2>
+            <h2 className="text-2xl font-semibold mb-4 ext-black">User Responsibilities</h2>
             <p className="mb-4">
               As a user, you agree to:
             </p>
