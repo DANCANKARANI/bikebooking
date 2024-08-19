@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Image from 'next/image';
+
 
 interface Bike {
   id: string;
@@ -117,7 +119,7 @@ const Home = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8">
             {bikes.map((bike) => (
               <div key={bike.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                <img
+                <Image
                   src={bike.image_url}
                   alt={`Bike in ${bike.location}`}
                   className="w-full h-48 object-cover"

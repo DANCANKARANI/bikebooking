@@ -2,6 +2,7 @@
 
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import Image from 'next/image';
 
 
 const AboutUsPage = () => {
@@ -35,19 +36,17 @@ const AboutUsPage = () => {
             <h2 className="text-3xl font-semibold mb-4">Meet the Team</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-gray-100 p-6 rounded-lg text-center">
-                <img src="/member-1.jpg" alt="Team Member 1" className="w-32 h-32 mx-auto mb-4 rounded-full object-cover" />
-                <h3 className="text-xl font-semibold mb-2">Tyson Mwenda</h3>
+              <Image src="/member-1.jpg" alt="Team Member 1" width={128} height={128} className="mx-auto mb-4 rounded-full object-cover" />                <h3 className="text-xl font-semibold mb-2">Tyson Mwenda</h3>
                 <p className="text-gray-600">Co-Founder & CEO</p>
                 <p className="mt-2">Tyson is a seasoned cyclist and tech visionary, driving the innovation and growth of Bike Booking App.</p>
               </div>
               <div className="bg-gray-100 p-6 rounded-lg text-center">
-                <img src="/member-3.jpg" alt="Team Member 2" className="w-32 h-32 mx-auto mb-4 rounded-full object-cover" />
+                <Image src="/member-3.jpg" alt="Team Member 2" className="w-32 h-32 mx-auto mb-4 rounded-full object-cover" />
                 <h3 className="text-xl font-semibold mb-2">Brian Yobra</h3>
                 <p className="text-gray-600">Co-Founder & CTO</p>
-                <p className="mt-2">Brian oversees the technical development and ensures the platform's smooth operation and scalability.</p>
-              </div>
+                <p className="mt-2">Brian oversees the technical development and ensures the platform&#39;s smooth operation and scalability.</p>              </div>
               <div className="bg-gray-100 p-6 rounded-lg text-center">
-                <img src="/member-3.jpeg" alt="Team Member 3" className="w-32 h-32 mx-auto mb-4 rounded-full object-cover" />
+                <Image src="/member-3.jpeg" alt="Team Member 3" className="w-32 h-32 mx-auto mb-4 rounded-full object-cover" />
                 <h3 className="text-xl font-semibold mb-2">Clinton Mungai</h3>
                 <p className="text-gray-600">Head of Customer Success</p>
                 <p className="mt-2">Clinton is dedicated to ensuring our users have an exceptional experience and resolves any customer inquiries or issues.</p>

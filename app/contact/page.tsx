@@ -12,7 +12,7 @@ const ContactPage = () => {
           <section className="bg-white p-8 rounded-lg shadow-md mb-8">
             <h2 className="text-3xl font-semibold mb-4 text-center">Get in Touch</h2>
             <p className="text-lg mb-8 text-center">
-              Have questions, feedback, or need support? Fill out the form below, and we'll get back to you as soon as possible.
+              Have questions, feedback, or need support? Fill out the form below, and we&apos;ll get back to you as soon as possible.
             </p>
             <form className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
