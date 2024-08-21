@@ -14,7 +14,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="text-xl font-bold">Tyson Bike Booking</div>
         <nav className="hidden md:flex items-center space-x-4">
-          <Link href="/" className="hover:text-gray-300">Home</Link>
+          <Link href="/home" className="hover:text-gray-300">Home</Link>
           <Link href="/bikes" className="hover:text-gray-300">Bikes</Link>
           <Link href="/pricing" className="hover:text-gray-300">Pricing</Link>
           <Link href="/login" className="hover:text-gray-300">Logout</Link>
