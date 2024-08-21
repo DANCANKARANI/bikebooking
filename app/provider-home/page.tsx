@@ -12,15 +12,17 @@ const ProviderPage = () => {
   const [fileName, setFileName] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      setFileName(file.name);
-      setImageUrl(URL.createObjectURL(file)); // Generate a URL for the image
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImage(file); // Assuming setImage is the function to set the image file state
+  
+      // Create a URL for the selected image file to use as a preview
+      const imageUrl = URL.createObjectURL(file);
+      setImageUrl(imageUrl); // Assuming setImageUrl is the function to set the preview URL state
     }
   };
-
- 
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -106,14 +108,14 @@ const ProviderPage = () => {
             </div>
             <div className="mb-4">
               <label htmlFor="image" className="block text-gray-700">Image of the Bike</label>
-             <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-              onChange={handleImageChange}
-              required
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="image/*"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                onChange={handleImageChange}
+                required
               />
               {fileName && (
                 <p className="mt-2 text-sm text-gray-600">Selected file: {fileName}</p>
