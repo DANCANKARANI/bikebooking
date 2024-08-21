@@ -7,19 +7,19 @@ const pricingData = [
   {
     id: 1,
     name: 'Basic Plan',
-    price: '$10/hour',
+    price: 'ksh:500/hour',
     features: ['1 Bike', 'Helmet Included', 'City Rides'],
   },
   {
     id: 2,
     name: 'Pro Plan',
-    price: '$25/day',
+    price: 'ksh:1000/day',
     features: ['3 Bikes', 'Helmet & Lock', 'City & Off-road'],
   },
   {
     id: 3,
     name: 'Premium Plan',
-    price: '$50/day',
+    price: 'ksh:1500/day',
     features: ['Unlimited Bikes', 'Helmet, Lock & Insurance', 'All Terrain'],
   },
 ];
