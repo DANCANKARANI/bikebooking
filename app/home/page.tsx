@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-
-import LoginPage from './login/page';
+import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 
 
@@ -86,7 +86,60 @@ const Home = () => {
 
   return (
     <div className="font-sans antialiased">
-      <LoginPage />
+      <Navbar />
+      <header className="bg-blue-500 text-white p-4">
+        <h1 className="text-3xl">Bike Finder</h1>
+      </header>
+
+      <main className="container mx-auto px-4 py-8">
+        <section className="hero bg-cover bg-center text-white py-20" style={{ backgroundImage: "url('/hero-background.jpg')" }}>
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Adventure Awaits</h1>
+            <p className="text-lg mb-6">Find the perfect bike for your next ride</p>
+            <input
+              type="text"
+              placeholder="Search for bikes by location"
+              className="px-4 py-2 rounded w-full max-w-md mb-4 text-gray-800"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+            <button
+              onClick={handleSearch}
+              className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+            >
+              Find a Bike Near You
+            </button>
+          </div>
+        </section>
+
+        {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+        {success && !error && <p className="text-green-500 text-center mt-4">{success}</p>}
+
+        {bikes.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8">
+            {bikes.map((bike) => (
+              <div key={bike.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                <img
+                  src={bike.image_url}
+                  alt={`Bike in ${bike.location}`}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h3 className="text-xl font-bold">{bike.location}</h3>
+                  <p className="text-gray-600">ksh{bike.price} per hour</p>
+                  <button
+                    onClick={() => handleBookNow(bike.id)}
+                    className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+                  >
+                    Book Now
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </main>
+      <Footer />
     </div>
   );
 };

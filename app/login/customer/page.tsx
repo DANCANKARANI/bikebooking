@@ -29,7 +29,7 @@ const CustomerLoginPage = () => {
           // Save token to local storage (or handle it as needed)
           localStorage.setItem('authToken', result.data.token);
           // Redirect to home page
-          window.location.href = '/';
+          window.location.href = '/home';
         } else {
           throw new Error(result.message || 'Login failed. Please check your email and password.');
         }
@@ -45,7 +45,6 @@ const CustomerLoginPage = () => {
 
   return (
     <div className="font-sans antialiased text-black"> {/* Ensuring text color is black */}
-      <Navbar />
       <main className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
           <h1 className="text-3xl font-bold mb-6 text-center text-black"> {/* Setting text color here */}
