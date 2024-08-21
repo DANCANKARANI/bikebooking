@@ -34,8 +34,7 @@ const Navbar = () => {
           <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600">Home</Link>
           <Link href="/bikes" className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600">Bikes</Link>
           <Link href="/pricing" className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600">Pricing</Link>
-          <Link href="/login" className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600">Login/Sign Up</Link>
-          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-1">Book Now</button>
+          <Link href="/login" className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600">Logout</Link>
         </nav>
       </div>
     </header>
