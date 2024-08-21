@@ -6,13 +6,13 @@ import React, { useState } from 'react';
 const ProviderLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [token,setToken] = useState('');
+  const [token, setToken] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(''); // Clear any previous errors
-    console.log(token)
+    console.log(token);
 
     try {
       const response = await fetch('https://tysonbikes.onrender.com/api/v1/provider/login', {
@@ -28,14 +28,13 @@ const ProviderLoginPage = () => {
       if (response.ok) {
         if (result.success === 'true') {
           console.log('Login successful:', result);
-          // Save token to local storage (or handle it as needed)
-          setToken(result.data.token)
-          
+          // Save token to state and local storage
+          setToken(result.data.token);
+          localStorage.setItem('authToken', result.data.token);
+
           // Redirect to home page or provider dashboard
           window.location.href = '/provider-home'; // Adjust as needed
-          localStorage.setItem('authToken', result.data.token);
-          console.log(token)
-         
+          console.log(token);
         } else {
           throw new Error(result.error || 'Login failed. Please check your email and password.');
         }
@@ -50,34 +49,34 @@ const ProviderLoginPage = () => {
   };
 
   return (
-    <div className="font-sans antialiased">
+    <div className="font-sans antialiased text-black"> {/* Ensuring text color is black */}
       <Navbar />
       <main className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-          <h1 className="text-3xl font-bold mb-6 text-center">Provider Login</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center text-black">Provider Login</h1>
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-700">Email</label>
+              <label htmlFor="email" className="block text-black">Email</label> {/* Ensuring text color is black */}
               <input
                 type="email"
                 id="email"
                 name="email"
                 placeholder="you@example.com"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-black" // Ensure text color inside the input is black
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="mb-6">
-              <label htmlFor="password" className="block text-gray-700">Password</label>
+              <label htmlFor="password" className="block text-black">Password</label> {/* Ensuring text color is black */}
               <input
                 type="password"
                 id="password"
                 name="password"
                 placeholder="********"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-black" // Ensure text color inside the input is black
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

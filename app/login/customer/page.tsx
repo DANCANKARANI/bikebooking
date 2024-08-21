@@ -44,34 +44,40 @@ const CustomerLoginPage = () => {
   };
 
   return (
-    <div className="font-sans antialiased">
+    <div className="font-sans antialiased text-black"> {/* Ensuring text color is black */}
       <Navbar />
       <main className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-          <h1 className="text-3xl font-bold mb-6 text-center">Customer Login</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center text-black"> {/* Setting text color here */}
+            Customer Login
+          </h1>
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
-              <label htmlFor="email" className="block text-gray-700">Email</label>
+              <label htmlFor="email" className="block text-black"> {/* Ensuring text color is black */}
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 placeholder="you@example.com"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-black" // Ensure text color inside the input is black
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
             <div className="mb-6">
-              <label htmlFor="password" className="block text-gray-700">Password</label>
+              <label htmlFor="password" className="block text-black"> {/* Ensuring text color is black */}
+                Password
+              </label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 placeholder="********"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-black" // Ensure text color inside the input is black
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
