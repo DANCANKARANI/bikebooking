@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
 interface Bike {
+  owner: string;
   id: string;
   name: string;
   location: string;
