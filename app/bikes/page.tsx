@@ -74,7 +74,7 @@ const BikesPage = () => {
   };
 
   return (
-    <div className="font-sans antialiased">
+    <div className="font-sans antialiased bg-gray-900 text-white">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6 text-center">Available Bikes</h1>
