@@ -106,7 +106,7 @@ const ProviderDashboard = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-gray-100">
       <h1 className="text-3xl font-bold mb-6 text-center">Provider Dashboard</h1>
       <h2 className="text-xl font-semibold text-center mb-4">Welcome, {userName}</h2> {/* Display user's full name */}
       {error && <p className="text-red-500 text-center mb-6">{error}</p>}
