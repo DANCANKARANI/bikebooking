@@ -4,8 +4,6 @@ import React, { useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
-
-
 interface Bike {
   id: string;
   name: string;
@@ -65,7 +63,7 @@ const Home = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ book_id: bikeId }), // Sending book_id in the body
+        body: JSON.stringify({ book_id: bikeId }),
       });
 
       if (!response.ok) {
@@ -85,14 +83,14 @@ const Home = () => {
   };
 
   return (
-    <div className="font-sans antialiased">
+    <div className="font-sans antialiased bg-gray-900 text-white">
       <Navbar />
       <header className="bg-blue-500 text-white p-4">
         <h1 className="text-3xl">Bike Finder</h1>
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <section className="hero bg-cover bg-center text-white py-20" style={{ backgroundImage: "url('/hero-background.jpg')" }}>
+        <section className="hero bg-cover bg-center text-white py-20 bg-gray-800">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Adventure Awaits</h1>
             <p className="text-lg mb-6">Find the perfect bike for your next ride</p>
@@ -124,9 +122,10 @@ const Home = () => {
                   alt={`Bike in ${bike.location}`}
                   className="w-full h-48 object-cover"
                 />
-                <div className="p-4">
+                <div className="bg-gray-800 p-4 text-white">
                   <h3 className="text-xl font-bold">{bike.location}</h3>
-                  <p className="text-gray-600">ksh{bike.price} per hour</p>
+                  <p className="text-gray-400">ksh{bike.price} per hour</p>
+                  <p className="text-gray-400">Owner: {bike.owner}</p>
                   <button
                     onClick={() => handleBookNow(bike.id)}
                     className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
