@@ -49,14 +49,13 @@ const BikesPage = () => {
       setError('');
       setSuccessMessage('');
       
-      // Use the bikeId directly in the URL path
       const response = await fetch(`https://tysonbikes.onrender.com/api/v1/bikes/bookings/${bikeId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
         },
-        body: JSON.stringify({ book_id: bikeId }), // Sending book_id in the body
+        body: JSON.stringify({ book_id: bikeId }),
       });
 
       if (!response.ok) {
@@ -77,13 +76,13 @@ const BikesPage = () => {
   return (
     <div className="font-sans antialiased">
       <Navbar />
-      <main className="container mx-auto px-4 py-8 bg-black">
+      <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6 text-center">Available Bikes</h1>
         {error && <p className="text-red-500 text-center mb-6">{error}</p>}
         {successMessage && <p className="text-green-500 text-center mb-6">{successMessage}</p>}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {bikes.map((bike) => (
-            <div key={bike.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <div key={bike.id} className="bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <img
                 src={bike.image_url}
                 alt={`Bike in ${bike.location}`}
@@ -91,8 +90,8 @@ const BikesPage = () => {
               />
               <div className="p-4">
                 <h3 className="text-xl font-bold">{bike.location}</h3>
-                <p className="text-gray-600">ksh{bike.price}/hour</p>
-                <p className="text-gray-600">Owner: {bike.owner}</p>
+                <p className="text-gray-400">ksh{bike.price}/hour</p>
+                <p className="text-gray-400">Owner: {bike.owner}</p>
                 <button
                   onClick={() => handleBookNow(bike.id)}
                   className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
