@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from 'react';
 
 interface Bike {
@@ -9,10 +9,15 @@ interface Bike {
   owner: string;
 }
 
+interface Provider {
+  full_name: string;
+}
+
 const ProviderDashboard = () => {
   const [bikes, setBikes] = useState<Bike[]>([]);
   const [error, setError] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
+  const [userName, setUserName] = useState<string>(''); // State for storing user's full name
 
   // Fetch the bikes associated with the provider
   useEffect(() => {
@@ -25,7 +30,7 @@ const ProviderDashboard = () => {
         });
 
         if (!response.ok) {
-          throw new Error(response+'Failed to fetch bikes');
+          throw new Error('Failed to fetch bikes');
         }
 
         const result = await response.json();
@@ -40,6 +45,34 @@ const ProviderDashboard = () => {
     };
 
     fetchBikes();
+  }, []);
+
+  // Fetch the user's full name
+  useEffect(() => {
+    const fetchUserName = async () => {
+      try {
+        const response = await fetch('https://tysonbikes.onrender.com/api/v1/provider', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch user information');
+        }
+
+        const result = await response.json();
+        if (result.success === "true") {
+          setUserName(result.data.full_name);
+        } else {
+          setError('Failed to fetch user name');
+        }
+      } catch (err: any) {
+        setError(err.message || 'An error occurred while fetching user information');
+      }
+    };
+
+    fetchUserName();
   }, []);
 
   // Handle bike deletion
@@ -75,23 +108,24 @@ const ProviderDashboard = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6 text-center">Provider Dashboard</h1>
+      <h2 className="text-xl font-semibold text-center mb-4">Welcome, {userName}</h2> {/* Display user's full name */}
       {error && <p className="text-red-500 text-center mb-6">{error}</p>}
       {successMessage && <p className="text-green-500 text-center mb-6">{successMessage}</p>}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {bikes.map((bike) => (
-          <div key={bike.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div key={bike.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
             <img
               src={bike.image_url}
               alt={`Bike in ${bike.location}`}
               className="w-full h-48 object-cover"
             />
             <div className="p-4">
-              <h3 className="text-xl font-bold">{bike.location}</h3>
-              <p className="text-gray-600">${bike.price}/hour</p>
-              <p className="text-gray-600">Owner: {bike.owner}</p>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">{bike.location}</h3>
+              <p className="text-gray-600 mb-1">ksh{bike.price}/hour</p>
+              <p className="text-gray-600 mb-4">Owner: {bike.owner}</p>
               <button
                 onClick={() => handleDeleteBike(bike.id)}
-                className="mt-4 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition-colors"
               >
                 Delete
               </button>

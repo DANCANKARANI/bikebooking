@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Footer from '@/app/components/Footer';
 import Navbar from '@/app/components/Navbar';
 
@@ -12,17 +13,16 @@ const ProviderPage = () => {
   const [fileName, setFileName] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
+  const router = useRouter();
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setImage(file); // Assuming setImage is the function to set the image file state
-  
-      // Create a URL for the selected image file to use as a preview
+      setImage(file);
       const imageUrl = URL.createObjectURL(file);
-      setImageUrl(imageUrl); // Assuming setImageUrl is the function to set the preview URL state
+      setImageUrl(imageUrl);
     }
   };
-  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,10 +44,8 @@ const ProviderPage = () => {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
-        
       });
 
-      // Check if the response is JSON
       const contentType = response.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
         const text = await response.text();
@@ -58,7 +56,6 @@ const ProviderPage = () => {
 
       if (response.ok) {
         setSuccess('Bike details posted successfully!');
-        // Clear form fields
         setCost('');
         setLocation('');
         setImage(null);
@@ -71,12 +68,18 @@ const ProviderPage = () => {
     }
   };
 
+  const handleGoToDashboard = () => {
+    router.push('provider-home/dashboard');
+  };
+
   return (
     <div className="font-sans antialiased">
       <Navbar />
       <main className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-          <h1 className="text-3xl font-bold mb-6 text-center">Post Bike Details</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center">
+            Post Your Bike Details
+          </h1>
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
           {success && <p className="text-green-500 text-center mb-4">{success}</p>}
           <form onSubmit={handleSubmit}>
@@ -135,6 +138,12 @@ const ProviderPage = () => {
               Post Details
             </button>
           </form>
+          <button
+            onClick={handleGoToDashboard}
+            className="mt-4 w-full bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded"
+          >
+            Go to Dashboard
+          </button>
         </div>
       </main>
       <Footer />

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -9,6 +9,17 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleLogout = () => {
+    // Clear user authentication token
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Example for clearing a cookie
+
+    // Optionally, you might want to make an API call to log the user out from the server
+    // await fetch('/api/logout', { method: 'POST' });
+
+    // Redirect the user to the login page or home page
+    window.location.href = '/login'; // Redirect to login page
+  };
+
   return (
     <header className="bg-gray-800 text-white">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -17,7 +28,12 @@ const Navbar = () => {
           <Link href="/home" className="hover:text-gray-300">Home</Link>
           <Link href="/bikes" className="hover:text-gray-300">Bikes</Link>
           <Link href="/pricing" className="hover:text-gray-300">Pricing</Link>
-          <Link href="/login" className="hover:text-gray-300">Logout</Link>
+          <button 
+            onClick={handleLogout} 
+            className="hover:text-gray-300"
+          >
+            Logout
+          </button>
         </nav>
         <button
           className="md:hidden flex items-center px-3 py-2 border rounded text-white border-white hover:text-gray-300 hover:border-gray-300"
@@ -34,7 +50,12 @@ const Navbar = () => {
           <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600">Home</Link>
           <Link href="/bikes" className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600">Bikes</Link>
           <Link href="/pricing" className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600">Pricing</Link>
-          <Link href="/login" className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600">Logout</Link>
+          <button 
+            onClick={handleLogout} 
+            className="block px-3 py-2 rounded-md text-base font-medium hover:text-white hover:bg-gray-600 w-full text-left"
+          >
+            Logout
+          </button>
         </nav>
       </div>
     </header>
