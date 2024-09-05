@@ -129,10 +129,10 @@ const Reports = () => {
             <table className="min-w-full bg-gray-100">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 border">Location</th>
-                  <th className="py-2 px-4 border">Price</th>
-                  <th className="py-2 px-4 border">VAT</th>
-                  <th className="py-2 px-4 border">Total</th>
+                  <th className="py-2 px-4 border text-black">Location</th>
+                  <th className="py-2 px-4 border text-black">Price</th>
+                  <th className="py-2 px-4 border text-black">VAT</th>
+                  <th className="py-2 px-4 border text-black">Total</th>
                 </tr>
               </thead>
               <tbody>
