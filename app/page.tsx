@@ -27,7 +27,7 @@ const Home = () => {
 
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`https://tysonbikes.onrender.com/api/v1/bikes/?location=${encodeURIComponent(location)}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/bikes/?location=${encodeURIComponent(location)}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -37,12 +37,12 @@ const Home = () => {
 
       if (!response.ok) {
         console.log(result.error);
-        throw new Error(result || 'Failed to fetch bikes');
+        throw new Error('Failed to fetch bikes');
       }
 
       if (result.success !== "true" || result.data.length === 0) {
         console.log(result.error);
-        setError(result.error || 'No bikes found for this location');
+        setError('No bikes found for this location');
       } else {
         setSuccess(result.message);
         setBikes(result.data);

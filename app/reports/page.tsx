@@ -1,116 +1,155 @@
 "use client";
-import React, { useState } from "react";
+import { useEffect, useState } from 'react';
+
+interface User {
+  id: string;
+  full_name: string;
+  email: string;
+}
+
+interface Bike {
+  id: string;
+  location: string;
+  price: number;
+  vat: number;
+  total: number;
+  image_url: string;
+}
 
 const Reports = () => {
-  const [reportData, setReportData] = useState(null);
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [loadingUsers, setLoadingUsers] = useState(false);
+  const [users, setUsers] = useState<User[]>([]);
+  const [bikes, setBikes] = useState<Bike[]>([]);
+  const [error, setError] = useState<string>('');
 
-  // Function to fetch all bikes
-  const fetchAllBikes = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        "https://tysonbikes.onrender.com/api/v1/bikes/all",
-        {
-          method: "GET",
+  // Fetch all users
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/user/all`, {
           headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer your-token", // Include the authorization header if required
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
-        }
-      );
-      const data = await response.json();
-      setReportData(data);
-    } catch (error) {
-      console.error("Error fetching bikes data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+        });
 
-  // Function to fetch all users
-  const fetchAllUsers = async () => {
-    setLoadingUsers(true);
-    try {
-      const response = await fetch(
-        "https://tysonbikes.onrender.com/api/v1/user/all/",
-        {
-          method: "GET",
+        if (!response.ok) {
+          throw new Error('Failed to fetch users');
+        }
+
+        const result = await response.json();
+        if (result.success === "true") {
+          setUsers(result.data);
+        } else {
+          setError('No users found');
+        }
+      } catch (err: any) {
+        setError(err.message || 'An error occurred while fetching users');
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  // Fetch all bikes
+  useEffect(() => {
+    const fetchBikes = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/bikes/all`, {
           headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer your-token", // Include the authorization header if required
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
-        }
-      );
-      const data = await response.json();
-      setUserData(data);
-    } catch (error) {
-      console.error("Error fetching users data:", error);
-    } finally {
-      setLoadingUsers(false);
-    }
-  };
+        });
 
-  // Function to print the report
-  const printReport = () => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch bikes');
+        }
+
+        const result = await response.json();
+        if (result.success === "true") {
+          setBikes(result.data);
+        } else {
+          setError('No bikes found');
+        }
+      } catch (err: any) {
+        setError(err.message || 'An error occurred while fetching bikes');
+      }
+    };
+
+    fetchBikes();
+  }, []);
+
+  // Handle print button click
+  const handlePrint = () => {
     window.print();
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold mb-8 text-center">Bike and User Reports</h1>
+    <div className="container mx-auto px-4 py-8 bg-gray-100">
+      <h1 className="text-3xl font-bold mb-6 text-center">Reports</h1>
+      {error && <p className="text-red-500 text-center mb-6">{error}</p>}
       
-      {/* Grid layout for reports */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={handlePrint}
+          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+        >
+          Print
+        </button>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        
         {/* Users Section */}
-        <div className="bg-white shadow-md rounded p-6">
-          <h2 className="text-xl font-semibold mb-4">All Users Report</h2>
-          <button 
-            onClick={fetchAllUsers} 
-            className="bg-purple-500 text-white px-6 py-2 rounded hover:bg-purple-600 mb-4"
-          >
-            Get All Users Who Booked Rides
-          </button>
-          {loadingUsers && <p className="text-gray-500">Loading users...</p>}
-          {userData && (
-            <pre className="bg-gray-100 p-4 rounded overflow-x-auto">
-              {JSON.stringify(userData, null, 2)}
-            </pre>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">All Users</h2>
+          {users.length > 0 ? (
+            <table className="min-w-full bg-gray-100">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border">Full Name</th>
+                  <th className="py-2 px-4 border">Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map(user => (
+                  <tr key={user.id}>
+                    <td className="py-2 px-4 border">{user.full_name}</td>
+                    <td className="py-2 px-4 border">{user.email}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No users found</p>
           )}
-          <button 
-            onClick={printReport} 
-            className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-          >
-            Print Report
-          </button>
         </div>
-        
+
         {/* Bikes Section */}
-        <div className="bg-white shadow-md rounded p-6">
-          <h2 className="text-xl font-semibold mb-4">All Bikes Report</h2>
-          <button 
-            onClick={fetchAllBikes} 
-            className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 mb-4"
-          >
-            Get All Bikes Booked
-          </button>
-          {loading && <p className="text-gray-500">Loading bikes...</p>}
-          {reportData && (
-            <pre className="bg-gray-100 p-4 rounded overflow-x-auto">
-              {JSON.stringify(reportData, null, 2)}
-            </pre>
+        <div className="bg-white p-6 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-4">All Bikes</h2>
+          {bikes.length > 0 ? (
+            <table className="min-w-full bg-gray-100">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border">Location</th>
+                  <th className="py-2 px-4 border">Price</th>
+                  <th className="py-2 px-4 border">VAT</th>
+                  <th className="py-2 px-4 border">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bikes.map(bike => (
+                  <tr key={bike.id}>
+                    <td className="py-2 px-4 border">{bike.location}</td>
+                    <td className="py-2 px-4 border">{bike.price}</td>
+                    <td className="py-2 px-4 border">{bike.vat}</td>
+                    <td className="py-2 px-4 border">{bike.total}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No bikes found</p>
           )}
-          <button 
-            onClick={printReport} 
-            className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-          >
-            Print Report
-          </button>
         </div>
-        
       </div>
     </div>
   );

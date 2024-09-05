@@ -23,7 +23,7 @@ const ProviderDashboard = () => {
   useEffect(() => {
     const fetchBikes = async () => {
       try {
-        const response = await fetch('https://tysonbikes.onrender.com/api/v1/provider/bikes', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/provider/bikes`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -51,7 +51,7 @@ const ProviderDashboard = () => {
   useEffect(() => {
     const fetchUserName = async () => {
       try {
-        const response = await fetch('https://tysonbikes.onrender.com/api/v1/provider', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/provider`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -81,7 +81,7 @@ const ProviderDashboard = () => {
       setError('');
       setSuccessMessage('');
 
-      const response = await fetch(`https://tysonbikes.onrender.com/api/v1/bikes/${bikeId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/bikes/${bikeId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,

@@ -27,7 +27,7 @@ const ProviderSignupPage = () => {
     }
 
     try {
-      const response = await fetch('https://tysonbikes.onrender.com/api/v1/provider/', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/provider/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,19 +67,6 @@ const ProviderSignupPage = () => {
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
           {success && <p className="text-green-500 text-center mb-4">{success}</p>}
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="business-name" className="block text-gray-700">Business Name</label>
-              <input
-                type="text"
-                id="business-name"
-                name="business-name"
-                placeholder="Your Business Name"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 text-gray-700"
-                value={businessName}
-                onChange={(e) => setBusinessName(e.target.value)}
-                required
-              />
-            </div>
             <div className="mb-4">
               <label htmlFor="contact-person" className="block text-gray-700">Contact Person</label>
               <input
@@ -129,18 +116,6 @@ const ProviderSignupPage = () => {
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 text-gray-700"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="description" className="block text-gray-700">Business Description</label>
-              <textarea
-                id="description"
-                name="description"
-                placeholder="Describe your business"
-                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50 text-gray-700"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
                 required
               />
             </div>

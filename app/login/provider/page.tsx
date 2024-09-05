@@ -15,7 +15,7 @@ const ProviderLoginPage = () => {
     console.log(token);
 
     try {
-      const response = await fetch('https://tysonbikes.onrender.com/api/v1/provider/login', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/provider/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

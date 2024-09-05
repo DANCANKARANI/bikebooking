@@ -1,11 +1,71 @@
 "use client";
+
+import React, { useState } from 'react';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import "../globals.css";
 
 const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [success, setSuccess] = useState<string>(''); // For success messages
+  const [error, setError] = useState<string>(''); // For error messages
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSuccess('');
+    setError('');
+  
+    try {
+      const token = localStorage.getItem('authToken'); // Retrieve the token from localStorage
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/user/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Add the Authorization header
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      const textResponse = await response.text(); // Get the raw text response
+      console.log('Response Text:', textResponse);
+  
+      try {
+        const result = JSON.parse(textResponse); // Try to parse the JSON response
+        if (response.ok) {
+          setSuccess('Your message has been sent successfully!');
+          setFormData({
+            name: '',
+            email: '',
+            subject: '',
+            message: '',
+          });
+        } else {
+          throw new Error(result.message || 'Failed to send message');
+        }
+      } catch (jsonError) {
+        // Handle case where response is not valid JSON
+        setSuccess(textResponse);
+      }
+    } catch (error: any) {
+      setError(error.message || 'An unknown error occurred.');
+    }
+  };
+
   return (
-    <div className="font-sans antialiased">
+    <div className="font-sans antialiased text-black"> {/* Ensuring text color is black */}
       <Navbar />
       <main className="bg-gray-100 py-16 px-4">
         <div className="container mx-auto px-4">
@@ -15,7 +75,7 @@ const ContactPage = () => {
             <p className="text-lg mb-8 text-center">
               Have questions, feedback, or need support? Fill out the form below, and we&apos;ll get back to you as soon as possible.
             </p>
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -25,6 +85,8 @@ const ContactPage = () => {
                     type="text"
                     id="name"
                     name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     required
                     className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -37,6 +99,8 @@ const ContactPage = () => {
                     type="email"
                     id="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     required
                     className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -50,6 +114,8 @@ const ContactPage = () => {
                   type="text"
                   id="subject"
                   name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
                   required
                   className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
@@ -61,6 +127,8 @@ const ContactPage = () => {
                 <textarea
                   id="message"
                   name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   required
                   className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 ></textarea>
@@ -74,6 +142,8 @@ const ContactPage = () => {
                 </button>
               </div>
             </form>
+            {success && <p className="text-green-500 text-center mt-4">{success}</p>}
+            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
           </section>
 
           <section className="bg-white p-8 rounded-lg shadow-md">

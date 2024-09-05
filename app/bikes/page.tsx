@@ -16,11 +16,13 @@ const BikesPage = () => {
   const [bikes, setBikes] = useState<Bike[]>([]);
   const [error, setError] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
+  const [selectedBikeId, setSelectedBikeId] = useState<string | null>(null);
+  const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchBikes = async () => {
       try {
-        const response = await fetch('https://tysonbikes.onrender.com/api/v1/bikes/all', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/bikes/all`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -48,8 +50,8 @@ const BikesPage = () => {
     try {
       setError('');
       setSuccessMessage('');
-      
-      const response = await fetch(`https://tysonbikes.onrender.com/api/v1/bikes/bookings/${bikeId}`, {
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/bikes/bookings/${bikeId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -65,11 +67,44 @@ const BikesPage = () => {
       const result = await response.json();
       if (result.success === "true") {
         setSuccessMessage(`Successfully booked bike with ID: ${bikeId}`);
+        setSelectedBikeId(bikeId);
+        setShowPaymentModal(true);  // Show payment modal after booking
       } else {
         throw new Error(result.message || 'Booking failed');
       }
     } catch (err: any) {
       setError(err.message || 'An error occurred while booking the bike');
+    }
+  };
+
+  const handlePaymentOption = async (paymentOption: string) => {
+    try {
+      setError('');
+      setSuccessMessage('');
+
+      // Process the payment based on the selected payment option
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/bikes/bookings/${selectedBikeId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        body: JSON.stringify({ payment_option: paymentOption }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to process payment');
+      }
+
+      const result = await response.json();
+      if (result.success === "true") {
+        setSuccessMessage(`Payment ${paymentOption} for bike with ID: ${selectedBikeId} processed successfully`);
+        setShowPaymentModal(false);  // Hide payment modal after successful payment
+      } else {
+        throw new Error(result.message || 'Payment failed');
+      }
+    } catch (err: any) {
+      setError(err.message || 'An error occurred while processing payment');
     }
   };
 
@@ -104,6 +139,30 @@ const BikesPage = () => {
         </div>
       </main>
       <Footer />
+
+      {/* Payment Modal */}
+      {showPaymentModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white text-black p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold mb-4">Choose Payment Option</h2>
+            <p className="mb-4">How would you like to pay for your booking?</p>
+            <div className="flex justify-between">
+              <button
+                onClick={() => handlePaymentOption('before')}
+                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mr-2"
+              >
+                Pay Before Ride
+              </button>
+              <button
+                onClick={() => handlePaymentOption('after')}
+                className="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded ml-2"
+              >
+                Pay After Ride
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

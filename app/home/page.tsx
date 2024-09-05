@@ -26,7 +26,7 @@ const Home = () => {
 
     try {
       const token = localStorage.getItem('authToken');
-      const response = await fetch(`https://tysonbikes.onrender.com/api/v1/bikes/?location=${encodeURIComponent(location)}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/bikes/?location=${encodeURIComponent(location)}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

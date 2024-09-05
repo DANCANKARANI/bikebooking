@@ -26,7 +26,7 @@ const CustomerSignupPage = () => {
 
     try {
 
-      const response = await fetch('https://tysonbikes.onrender.com/api/v1/user/signup', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/user/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
