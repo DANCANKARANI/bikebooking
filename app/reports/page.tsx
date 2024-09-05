@@ -104,15 +104,15 @@ const Reports = () => {
             <table className="min-w-full bg-gray-100">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 border">Full Name</th>
-                  <th className="py-2 px-4 border">Email</th>
+                  <th className="py-2 px-4 border text-black">Full Name</th>
+                  <th className="py-2 px-4 border text-black">Email</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map(user => (
                   <tr key={user.id}>
-                    <td className="py-2 px-4 border">{user.full_name}</td>
-                    <td className="py-2 px-4 border">{user.email}</td>
+                    <td className="py-2 px-4 border text-black">{user.full_name}</td>
+                    <td className="py-2 px-4 border text-black">{user.email}</td>
                   </tr>
                 ))}
               </tbody>
