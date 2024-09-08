@@ -11,6 +11,7 @@ interface Bike {
   location: string;
   price: number;
   image_url: string;
+  number_plate: string; // Added field for number plate
 }
 
 const Home = () => {
@@ -127,6 +128,7 @@ const Home = () => {
                   <h3 className="text-xl font-bold">{bike.location}</h3>
                   <p className="text-gray-400">ksh{bike.price} per hour</p>
                   <p className="text-gray-400">Owner: {bike.owner}</p>
+                  <p className="text-gray-400">Number Plate: {bike.number_plate}</p> {/* Displaying number plate */}
                   <button
                     onClick={() => handleBookNow(bike.id)}
                     className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"

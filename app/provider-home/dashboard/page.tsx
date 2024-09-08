@@ -7,10 +7,7 @@ interface Bike {
   location: string;
   price: number;
   owner: string;
-}
-
-interface Provider {
-  full_name: string;
+  number_plate: string; // Add number_plate property
 }
 
 const ProviderDashboard = () => {
@@ -122,6 +119,7 @@ const ProviderDashboard = () => {
             <div className="p-4">
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{bike.location}</h3>
               <p className="text-gray-600 mb-1">ksh{bike.price}/hour</p>
+              <p className="text-gray-600 mb-1">Number Plate: {bike.number_plate}</p> {/* Display bike number plate */}
               <p className="text-gray-600 mb-4">Owner: {bike.owner}</p>
               <button
                 onClick={() => handleDeleteBike(bike.id)}

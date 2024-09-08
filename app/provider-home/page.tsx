@@ -7,10 +7,10 @@ import Navbar from '@/app/components/Navbar';
 const ProviderPage = () => {
   const [cost, setCost] = useState('');
   const [location, setLocation] = useState('');
+  const [number_plate, setNumberPlate] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [fileName, setFileName] = useState<string>('');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const router = useRouter();
@@ -32,6 +32,7 @@ const ProviderPage = () => {
     const formData = new FormData();
     formData.append('cost', cost);
     formData.append('location', location);
+    formData.append('number_plate', number_plate); // Add number_plate to formData
     if (image) {
       formData.append('image', image);
     }
@@ -58,7 +59,9 @@ const ProviderPage = () => {
         setSuccess('Bike details posted successfully!');
         setCost('');
         setLocation('');
+        setNumberPlate(''); // Clear the number_plate field
         setImage(null);
+        setImageUrl(null); // Clear the image preview
       } else {
         throw new Error(result.message || 'Failed to post bike details.');
       }
@@ -109,6 +112,21 @@ const ProviderPage = () => {
                 required
               />
             </div>
+
+            <div className="mb-4">
+              <label htmlFor="number_plate" className="block text-gray-700">Number Plate</label>
+              <input
+                type="text"
+                id="number_plate"
+                name="number_plate"
+                placeholder="Enter Number Plate"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-gray-700"
+                value={number_plate}
+                onChange={(e) => setNumberPlate(e.target.value)}
+                required
+              />
+            </div>
+
             <div className="mb-4">
               <label htmlFor="image" className="block text-gray-700">Image of the Bike</label>
               <input
@@ -120,9 +138,6 @@ const ProviderPage = () => {
                 onChange={handleImageChange}
                 required
               />
-              {fileName && (
-                <p className="mt-2 text-sm text-gray-600">Selected file: {fileName}</p>
-              )}
               {imageUrl && (
                 <img
                   src={imageUrl}
