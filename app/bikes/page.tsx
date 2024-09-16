@@ -121,7 +121,7 @@ const BikesPage = () => {
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6 text-center text-white">Available Bikes</h1>
-        <h4 className="text-3xl font-bold mb-6 text-center text-white">The customer will cater for the bike's fuel consuption</h4>
+        <h4 className="text-3xl font-bold mb-6 text-center text-white">The customer will cater for the bike fuel consuption</h4>
         {error && <p className="text-red-500 text-center mb-6">{error}</p>}
         {successMessage && <p className="text-green-500 text-center mb-6">{successMessage}</p>}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
