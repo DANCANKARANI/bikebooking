@@ -12,41 +12,59 @@ const CustomerSignupPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setSuccess('');
-
+  
+    // Email validation: check for '@' and at least one '.' after the '@'
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+  
+    // Validate password length
+    if (password.length < 3) {
+      setError('Password must be at least 3 characters long.');
+      return;
+    }
+  
+    // Check for weak passwords (like '123', 'password', 'qwerty', etc.)
+    const weakPasswords = ['123', 'password', 'qwerty', '123456', 'letmein'];
+    if (weakPasswords.includes(password)) {
+      setError('Weak password. Please choose a stronger password.');
+      return;
+    }
+  
     // Validate passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
-
+  
     try {
-
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/user/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           full_name: fullName,
           email,
           password,
-          confirm_password: confirmPassword 
+          confirm_password: confirmPassword,
         }),
       });
-
+  
       const result = await response.json();
-
+  
       if (response.ok) {
-        setError(result.error);
+        setSuccess('Signup successful!');
         setTimeout(() => {
           router.push('/login/customer');
-        }, 2000); // Redirect after 2 seconds to allow the success message to be visible
+        }, 4000); // Redirect after 4 seconds to allow the success message to be visible
       } else {
         throw new Error(result.message || 'Sign up failed. Please try again.');
       }
@@ -55,7 +73,9 @@ const CustomerSignupPage = () => {
       setError(error.message || 'An unknown error occurred.');
     }
   };
-
+  
+  
+  
   return (
     <div className="font-sans antialiased">
       <Navbar />

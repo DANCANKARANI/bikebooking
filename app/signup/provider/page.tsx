@@ -19,13 +19,33 @@ const ProviderSignupPage = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
-
+  
+    // Email validation: check for '@' and at least one '.' after the '@'
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+  
+    // Validate password length (must be at least 3 characters)
+    if (password.length < 3) {
+      setError('Password must be at least 3 characters long.');
+      return;
+    }
+  
+    // Check for weak passwords (example: '123', 'password', etc.)
+    const weakPasswords = ['123', 'password', 'qwerty'];
+    if (weakPasswords.includes(password)) {
+      setError('Weak password. Please choose a stronger password.');
+      return;
+    }
+  
     // Validate passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
-
+  
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/provider/`, {
         method: 'POST',
@@ -41,14 +61,14 @@ const ProviderSignupPage = () => {
           business_description: description,
         }),
       });
-
+  
       const result = await response.json();
-
+  
       if (response.ok) {
         setSuccess('Signup successful! Redirecting to login...');
         setTimeout(() => {
           router.push('/login/provider');
-        }, 2000); // Redirect after 2 seconds to allow the success message to be visible
+        }, 4000); // Redirect after 2 seconds to allow the success message to be visible
       } else {
         throw new Error(result.message || 'Sign up failed. Please try again.');
       }
@@ -57,7 +77,8 @@ const ProviderSignupPage = () => {
       setError(error.message || 'An unknown error occurred.');
     }
   };
-
+  
+  
   return (
     <div className="font-sans antialiased">
       <Navbar />

@@ -13,7 +13,14 @@ const ProviderLoginPage = () => {
     e.preventDefault();
     setError(''); // Clear any previous errors
     console.log(token);
-
+  
+    // Basic email validation: check for '@' and at least one '.' after the '@'
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+  
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/provider/login`, {
         method: 'POST',
@@ -22,16 +29,16 @@ const ProviderLoginPage = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const result = await response.json();
-
+  
       if (response.ok) {
         if (result.success === 'true') {
           console.log('Login successful:', result);
           // Save token to state and local storage
           setToken(result.data.token);
           localStorage.setItem('authToken', result.data.token);
-
+  
           // Redirect to home page or provider dashboard
           window.location.href = '/provider-home'; // Adjust as needed
           console.log(token);
@@ -47,6 +54,7 @@ const ProviderLoginPage = () => {
       setError(error.message || 'An unknown error occurred.');
     }
   };
+  
 
   return (
     <div className="font-sans antialiased text-black"> {/* Ensuring text color is black */}

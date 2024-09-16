@@ -91,11 +91,11 @@ const Home = () => {
         <h1 className="text-3xl">Bike Finder</h1>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <section className="hero bg-cover bg-center text-white py-20 bg-gray-800">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Your Adventure Awaits</h1>
-            <p className="text-lg mb-6">Find the perfect bike for your next ride</p>
+      <main className="container mx-auto px-4 py-8" >
+        <section className="hero bg-cover bg-center text-white py-20">
+          <div className="container mx-auto px-4 text-center" style={{ backgroundImage: 'url("/bike1.jpeg")' }}>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-blue-500">Your Adventure Awaits</h1>
+            <p className="text-lg mb-6 text-blue-500">Find the perfect bike for your next ride</p>
             <input
               type="text"
               placeholder="Search for bikes by location"

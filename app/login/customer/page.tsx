@@ -11,7 +11,14 @@ const CustomerLoginPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(''); // Clear any previous errors
-
+  
+    // Basic email validation: check for '@' and at least one '.' after the '@'
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+  
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/user/login`, {
         method: 'POST',
@@ -20,9 +27,9 @@ const CustomerLoginPage = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const result = await response.json();
-
+  
       if (response.ok) {
         if (result.success === 'true') {
           console.log('Login successful:', result);
@@ -42,7 +49,7 @@ const CustomerLoginPage = () => {
       setError(error.message || 'An unknown error occurred.');
     }
   };
-
+  
   return (
     <div className="font-sans antialiased text-black"> {/* Ensuring text color is black */}
       <main className="flex items-center justify-center min-h-screen bg-gray-100">

@@ -66,8 +66,14 @@ const BikesPage = () => {
       }
 
       const result = await response.json();
+
       if (result.success === "true") {
-        setSuccessMessage(`Successfully booked bike with ID: ${bikeId}`);
+        // Calculate pickup and return times
+        const currentTime = new Date();
+        const pickupTime = currentTime.toLocaleString();
+        const returnTime = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000).toLocaleString();
+
+        setSuccessMessage(`Successfully booked bike with ID: ${bikeId}\n\nPickup Time: ${pickupTime}\nReturn Time: ${returnTime}`);
         setSelectedBikeId(bikeId);
         setShowPaymentModal(true);  // Show payment modal after booking
       } else {
@@ -98,6 +104,7 @@ const BikesPage = () => {
       }
 
       const result = await response.json();
+
       if (result.success === "true") {
         setSuccessMessage(`Payment ${paymentOption} for bike with ID: ${selectedBikeId} processed successfully`);
         setShowPaymentModal(false);  // Hide payment modal after successful payment
@@ -113,7 +120,8 @@ const BikesPage = () => {
     <div className="font-sans antialiased bg-gray-900 text-white">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6 text-center">Available Bikes</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-white">Available Bikes</h1>
+        <h4 className="text-3xl font-bold mb-6 text-center text-white">The customer will cater for the bike's fuel consuption</h4>
         {error && <p className="text-red-500 text-center mb-6">{error}</p>}
         {successMessage && <p className="text-green-500 text-center mb-6">{successMessage}</p>}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
