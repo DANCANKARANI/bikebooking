@@ -51,7 +51,7 @@ const BikesPage = () => {
     try {
       setError('');
       setSuccessMessage('');
-
+  
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/bikes/bookings/${bikeId}`, {
         method: 'POST',
         headers: {
@@ -60,22 +60,25 @@ const BikesPage = () => {
         },
         body: JSON.stringify({ book_id: bikeId }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Failed to book the bike');
       }
-
+  
       const result = await response.json();
-
+  
       if (result.success === "true") {
         // Calculate pickup and return times
         const currentTime = new Date();
         const pickupTime = currentTime.toLocaleString();
         const returnTime = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000).toLocaleString();
-
-        setSuccessMessage(`Successfully booked bike with ID: ${bikeId}\n\nPickup Time: ${pickupTime}\nReturn Time: ${returnTime}`);
+  
+        // Update success message with pickup time, return time, and contact details
+        setSuccessMessage(
+          `Successfully booked bike with ID: ${bikeId}\n\nPickup Time: ${pickupTime}\nReturn Time: ${returnTime}\n\nContact 0715118565 for pick-up location details.`
+        );
         setSelectedBikeId(bikeId);
-        setShowPaymentModal(true);  // Show payment modal after booking
+        setShowPaymentModal(true); // Show payment modal after booking
       } else {
         throw new Error(result.message || 'Booking failed');
       }
@@ -83,6 +86,7 @@ const BikesPage = () => {
       setError(err.message || 'An error occurred while booking the bike');
     }
   };
+  
 
   const handlePaymentOption = async (paymentOption: string) => {
     try {
@@ -121,9 +125,21 @@ const BikesPage = () => {
       <Navbar />
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6 text-center text-white">Available Bikes</h1>
-        <h4 className="text-3xl font-bold mb-6 text-center text-white">The customer will cater for the bike fuel consuption</h4>
+        <h4 className="text-3xl font-bold mb-6 text-center text-white">The customer will cater for the bike fuel consumption</h4>
+  
+        {/* Display Error Message */}
         {error && <p className="text-red-500 text-center mb-6">{error}</p>}
-        {successMessage && <p className="text-green-500 text-center mb-6">{successMessage}</p>}
+  
+        {/* Display Success Message as Label */}
+        {successMessage && (
+          <div className="text-center mb-6">
+            <p className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg inline-block">
+              {successMessage}
+              <br /> Contact 0715118565 for pick-up location details.
+            </p>
+          </div>
+        )}
+  
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {bikes.map((bike) => (
             <div key={bike.id} className="bg-gray-800 rounded-lg shadow-md overflow-hidden">
@@ -136,7 +152,7 @@ const BikesPage = () => {
                 <h3 className="text-xl font-bold">{bike.location}</h3>
                 <p className="text-gray-400">ksh{bike.price}/hour</p>
                 <p className="text-gray-400">Owner: {bike.owner}</p>
-                <p className="text-gray-400">Number Plate: {bike.number_plate}</p> {/* Displaying number plate */}
+                <p className="text-gray-400">Number Plate: {bike.number_plate}</p>
                 <button
                   onClick={() => handleBookNow(bike.id)}
                   className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
@@ -149,7 +165,7 @@ const BikesPage = () => {
         </div>
       </main>
       <Footer />
-
+  
       {/* Payment Modal */}
       {showPaymentModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -176,5 +192,4 @@ const BikesPage = () => {
     </div>
   );
 };
-
-export default BikesPage;
+export default BikesPage  

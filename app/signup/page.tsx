@@ -8,7 +8,12 @@ const ProviderSignupPage = () => {
   return (
     <div className="font-sans antialiased">
       <Navbar />
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8" style={{
+          backgroundImage: 'url("/bike1.jpeg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}>
         <h1 className="text-3xl font-bold mb-6">Bike Provider Registration</h1>
         {/* Registration form for bike providers */}
         <form className="bg-white p-8 rounded-lg shadow-md">

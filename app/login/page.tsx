@@ -15,8 +15,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="font-sans antialiased">
-      <main className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="font-sans antialiased" >
+      <main className="flex items-center justify-center min-h-screen bg-gray-100"style={{
+          backgroundImage: 'url("/bike1.jpeg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }} >
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
           <h1 className="text-3xl font-bold mb-6 text-center">Login</h1>
           <p className="text-lg mb-8 text-center">Please select your role:</p>

@@ -79,7 +79,12 @@ const CustomerSignupPage = () => {
   return (
     <div className="font-sans antialiased">
       <Navbar />
-      <main className="flex items-center justify-center min-h-screen bg-gray-100">
+      <main className="flex items-center justify-center min-h-screen bg-gray-100" style={{
+          backgroundImage: 'url("/bike1.jpeg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}>
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
           <h1 className="text-3xl font-bold mb-6 text-center">Customer Sign Up</h1>
           {error && <p className="text-red-500 text-center mb-4">{error}</p>}
