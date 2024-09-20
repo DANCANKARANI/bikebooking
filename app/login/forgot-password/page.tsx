@@ -59,7 +59,7 @@ const handleResetPasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) =>
               email,              // Make sure this is sent as part of the reset
               phone_number,       // Include phone number if required
               reset_code,         // This is the reset code sent via email/phone
-              new_password: password,  // The actual new password field
+              password,  // The actual new password field
           }),
       });
 
