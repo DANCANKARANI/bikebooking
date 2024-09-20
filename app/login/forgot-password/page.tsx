@@ -105,7 +105,7 @@ const handleResetPasswordSubmit = async (e: React.FormEvent<HTMLFormElement>) =>
                         />
                     </div>
                     <div className="mb-4">
-                        <label htmlFor="phone" className="block text-gray-700">Phone Number:</label>
+                        <label htmlFor="phone" className="block text-black">Phone Number:</label>
                         <input
                             type="tel"
                             id="phone"
