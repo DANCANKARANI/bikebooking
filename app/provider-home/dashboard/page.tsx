@@ -120,7 +120,6 @@ const ProviderDashboard = () => {
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{bike.location}</h3>
               <p className="text-gray-600 mb-1">ksh{bike.price}/hour</p>
               <p className="text-gray-600 mb-1">Number Plate: {bike.number_plate}</p> {/* Display bike number plate */}
-              <p className="text-gray-600 mb-4">Owner: {bike.owner}</p>
               <button
                 onClick={() => handleDeleteBike(bike.id)}
                 className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition-colors"

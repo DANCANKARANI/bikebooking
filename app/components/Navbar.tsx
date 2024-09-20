@@ -23,7 +23,7 @@ const Navbar = () => {
   return (
     <header className="bg-gray-800 text-white">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="text-xl font-bold">Tyson Bike Booking</div>
+        <div className="text-xl font-bold">Tyson Bike Hiring</div>
         <div>Welcome To TysonBikes</div>
         <nav className="hidden md:flex items-center space-x-4">
           <Link href="/home" className="hover:text-gray-300">Home</Link>

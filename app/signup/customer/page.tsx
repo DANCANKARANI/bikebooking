@@ -10,40 +10,41 @@ const CustomerSignupPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(''); // New state for phone number
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setSuccess('');
-  
+
     // Email validation: check for '@' and at least one '.' after the '@'
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
       setError('Please enter a valid email address.');
       return;
     }
-  
+
     // Validate password length
     if (password.length < 3) {
       setError('Password must be at least 3 characters long.');
       return;
     }
-  
-    // Check for weak passwords (like '123', 'password', 'qwerty', etc.)
+
+    // Check for weak passwords
     const weakPasswords = ['123', 'password', 'qwerty', '123456', 'letmein'];
     if (weakPasswords.includes(password)) {
       setError('Weak password. Please choose a stronger password.');
       return;
     }
-  
+
     // Validate passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
-  
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/user/signup`, {
         method: 'POST',
@@ -55,16 +56,17 @@ const CustomerSignupPage = () => {
           email,
           password,
           confirm_password: confirmPassword,
+          phone_number: phoneNumber, // Include phone number in the payload
         }),
       });
-  
+
       const result = await response.json();
-  
+
       if (response.ok) {
         setSuccess('Signup successful!');
         setTimeout(() => {
           router.push('/login/customer');
-        }, 4000); // Redirect after 4 seconds to allow the success message to be visible
+        }, 4000); // Redirect after 4 seconds
       } else {
         throw new Error(result.message || 'Sign up failed. Please try again.');
       }
@@ -73,9 +75,7 @@ const CustomerSignupPage = () => {
       setError(error.message || 'An unknown error occurred.');
     }
   };
-  
-  
-  
+
   return (
     <div className="font-sans antialiased">
       <Navbar />
@@ -113,6 +113,19 @@ const CustomerSignupPage = () => {
                 className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-gray-700"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="phoneNumber" className="block text-gray-700">Phone Number</label> {/* New field for phone number */}
+              <input
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                placeholder="0712345678"
+                className="mt-1 block w-full px-4 py-2 border rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 text-gray-700"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 required
               />
             </div>

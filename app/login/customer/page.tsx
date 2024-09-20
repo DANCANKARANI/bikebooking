@@ -96,7 +96,7 @@ const CustomerLoginPage = () => {
               Login
             </button>
             <div className="mt-4 text-center">
-              <a href="/forgot-password" className="text-blue-500 hover:underline">Forgot Password?</a>
+              <a href="./forgot-password" className="text-blue-500 hover:underline">Forgot Password?</a>
             </div>
           </form>
         </div>

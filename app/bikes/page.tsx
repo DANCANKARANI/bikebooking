@@ -126,10 +126,15 @@ const BikesPage = () => {
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6 text-center text-white">Available Bikes</h1>
         <h4 className="text-3xl font-bold mb-6 text-center text-white">The customer will cater for the bike fuel consumption</h4>
-  
+
+        {/* Display No Bikes Available Message */}
+        {bikes.length === 0 && !error && (
+          <p className="text-red-500 text-center mb-6">No bikes available</p>
+        )}
+
         {/* Display Error Message */}
         {error && <p className="text-red-500 text-center mb-6">{error}</p>}
-  
+
         {/* Display Success Message as Label */}
         {successMessage && (
           <div className="text-center mb-6">
@@ -139,7 +144,7 @@ const BikesPage = () => {
             </p>
           </div>
         )}
-  
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {bikes.map((bike) => (
             <div key={bike.id} className="bg-gray-800 rounded-lg shadow-md overflow-hidden">
@@ -167,28 +172,24 @@ const BikesPage = () => {
       <Footer />
   
       {/* Payment Modal */}
-      {showPaymentModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white text-black p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Choose Payment Option</h2>
-            <p className="mb-4">How would you like to pay for your booking?</p>
-            <div className="flex justify-between">
-              <button
-                onClick={() => handlePaymentOption('before')}
-                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mr-2"
-              >
-                Pay Before Ride
-              </button>
-              <button
-                onClick={() => handlePaymentOption('after')}
-                className="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded ml-2"
-              >
-                Pay After Ride
-              </button>
+      {/* Payment Modal */}
+        {showPaymentModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white text-black p-6 rounded-lg shadow-lg">
+              <h2 className="text-xl font-bold mb-4">Choose Payment Option</h2>
+              <p className="mb-4">How would you like to pay for your booking?</p>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => handlePaymentOption('before')}
+                  className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                >
+                  Pay Before Ride
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+
     </div>
   );
 };
